@@ -11,6 +11,16 @@ export const wdaSlice = createApi({
         body: credentials,
       }),
     }),
+    uploadTemplateDetails: builder.mutation({
+      query: (details) => ({
+        url: "business/uploadTemplateDetails",
+        method: "POST",
+        body: details,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }),
+    }),
     getAllStatusDetails: builder.query({
       query: () => "/admin/getAllStatus",
     }),
@@ -40,4 +50,5 @@ export const {
   useGetAllQueriesQuery,
   useLazyGetStatusByContactQuery,
   useUpdateStatusMutation,
+  useUploadTemplateDetailsMutation,
 } = wdaSlice;

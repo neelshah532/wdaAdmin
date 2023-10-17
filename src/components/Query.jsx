@@ -18,7 +18,6 @@ function Query() {
   const [isQueryDetailsActivate, setIsQueryDetailsActivate] = useState(false);
   const [contactNo, setContactNo] = useState(false);
   const { data: queries, isLoading } = useGetAllQueriesQuery();
-  console.log(getAllQueriesByContact);
 
   const searchQuery = (e) => {
     e.preventDefault();
@@ -146,18 +145,18 @@ function Query() {
                   mx="auto"
                 >
                   <Stack direction={{ base: "column", sm: "row" }}>
-                    <Box p={["1px", "1px", "1px"]} 
-                    // w={["100%", "30%", "100%"]}
-                   w={{ base: "100%", sm: "80%", md: "80%", lg: "100%" }}
-                    
+                    <Box
+                      p={["1px", "1px", "1px"]}
+                      // w={["100%", "30%", "100%"]}
+                      w={{ base: "100%", sm: "80%", md: "80%", lg: "100%" }}
                     >
                       <Text>Web Id:{item.webId} </Text>
                     </Box>
-                    <Box p={["1px", "1px", "1px"]}
-                    //  w={["100%", "30%", "60%"]}
-                   w={{ base: "100%", sm: "80%", md: "50%", lg: "60%" }}
-
-                     >
+                    <Box
+                      p={["1px", "1px", "1px"]}
+                      //  w={["100%", "30%", "60%"]}
+                      w={{ base: "100%", sm: "80%", md: "50%", lg: "60%" }}
+                    >
                       <Text>Date: {item.date} </Text>
                     </Box>
                   </Stack>
@@ -170,15 +169,8 @@ function Query() {
                   p={2}
                   mx="auto"
                 >
-                  <Box
-                   p={["1px", "1px", "1px"]}
-                   w={["100%", "30%", "95%"]}
-                   
-                   >
-                    <Text 
-                    fontSize="15"
-                    >{item.description}</Text>
-                    
+                  <Box p={["1px", "1px", "1px"]} w={["100%", "30%", "95%"]}>
+                    <Text fontSize="15">{item.description}</Text>
                   </Box>
                   {/* <Button
                       type="submit"
@@ -225,7 +217,7 @@ function Query() {
                 p={2}
                 mx="auto"
               >
-                <Box p={["1px", "1px" , "1px"]} w={["100%", "30%", "95%"]}>
+                <Box p={["1px", "1px", "1px"]} w={["100%", "30%", "95%"]}>
                   {getAllQueriesByContact.Name}
                   {getAllQueriesByContact.ContactNo}
                 </Box>
@@ -274,36 +266,34 @@ function Query() {
                         </Text>
                       </Box>
                     </Box>
-                    
                   </>
                 );
-                
               })}
             </>
           )}
         </>
       )}
-       <Box
-                    p={["1px", "1px", "1px"]}
-                    // w={["100%", "50%", "100%"]}
-                    w={{ md: "100%", lg: "100%" }}
-                    h={{ md: "100%", lg: "30%" }}
-                    bottom={{ md: "0", lg: "1%" }}
-                    bgColor={"white"}
-                    position={"sticky"}
-                    mr={{ base: "0", sm: "0", md: "1", lg: "1" }}
-                  >
-                    <Text
-                      fontSize={{ base: "2xl", md: "xl", lg: "2xl" }}
-                      position={"relative"}
-                      textAlign="center"
-                      color={"gray.500"}
-                      w={{ md: "100%", lg: "100%" }}
-                      m={{ base: "0", sm: "0", md: "1", lg: "3" }}
-                    >
-                      Tap on user to see details search with contact number
-                    </Text>
-                  </Box>
+      <Box
+        p={["1px", "1px", "1px"]}
+        // w={["100%", "50%", "100%"]}
+        w={{ md: "100%", lg: "100%" }}
+        h={{ md: "100%", lg: "30%" }}
+        bottom={{ md: "0", lg: "1%" }}
+        bgColor={"white"}
+        position={"sticky"}
+        mr={{ base: "0", sm: "0", md: "1", lg: "1" }}
+      >
+        <Text
+          fontSize={{ base: "2xl", md: "xl", lg: "2xl" }}
+          position={"relative"}
+          textAlign="center"
+          color={"gray.500"}
+          w={{ md: "100%", lg: "100%" }}
+          m={{ base: "0", sm: "0", md: "1", lg: "3" }}
+        >
+          Tap on user to see details search with contact number
+        </Text>
+      </Box>
     </Box>
   );
 }

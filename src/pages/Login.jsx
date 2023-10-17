@@ -136,7 +136,6 @@ function Login({ setIsLoggedIn }) {
           paddingTop={{ base: "40vh", md: "60vh", lg: "70vh" }}
           // bottom={{ base: "15vh", md: "-30vh", lg: "-35vh" }}
         >
-          
           <FormControl>
             {/* <FormLabel>Username</FormLabel> */}
             <Input
@@ -144,7 +143,7 @@ function Login({ setIsLoggedIn }) {
               name="data"
               value={mobileNumber}
               borderColor={"black"}
-             maxLength={8}// Set maximum length to 10 characters
+              maxLength={8} // Set maximum length to 10 characters
               placeholder="Mobile No"
               fontFamily={"noto-serif"}
               focusBorderColor="#1A237E"
@@ -153,7 +152,6 @@ function Login({ setIsLoggedIn }) {
               onChange={handleMobileNumberChange}
             />
           </FormControl>
-         
 
           <FormControl>
             {/* <FormLabel>Password</FormLabel> */}
@@ -164,12 +162,11 @@ function Login({ setIsLoggedIn }) {
               value={password}
               onChange={handlePasswordChange}
               // minLength={8}
-              maxLength={8}
+              maxLength={10}
               borderColor={"black"}
               focusBorderColor={"#1A237E"}
               rounded={"xl"}
               color={"#1A237E"}
-
               fontFamily={"noto-serif"}
             />
           </FormControl>
@@ -178,7 +175,7 @@ function Login({ setIsLoggedIn }) {
               {passwordError}
             </Text>
           )}
-           {mobileError && (
+          {mobileError && (
             <Text color="red" fontSize="sm">
               {mobileError}
             </Text>

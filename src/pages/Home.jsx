@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 // import background from "../images/home_background.jpeg";
 import background from "../images/Admin_Background.png";
 import logo from "../images/WDAlogo.png";
+import axios from "axios";
 import UpdateStatus from "../components/UpdateStatus";
 import Query from "../components/Query";
+import { useToast } from "@chakra-ui/react";
 // import QueryView from "../components/QueryView";
 import {
   Box,
@@ -22,6 +24,84 @@ import {
 } from "@chakra-ui/react";
 
 function Home() {
+  const toast = useToast();
+  const [validbusinessTemplate, setValidBusinessTemplate] = useState({
+    template: "",
+    templateImage: "",
+  });
+  const onChange = (event) => {
+    const file = event.target.files[0];
+    setValidBusinessTemplate((prevState) => ({
+      ...prevState,
+      [event.target.name]: file,
+    }));
+  };
+
+  const templateUpload = async (e) => {
+    e.preventDefault();
+
+    const [htmlFileName, htmletn] =
+      validbusinessTemplate.template.name.split(".");
+    const [gifFileName, gifetn] =
+      validbusinessTemplate.templateImage.name.split(".");
+    if (htmlFileName != gifFileName) {
+      toast({
+        title: "HTML and GIF Name Should Be Same",
+        status: "warning",
+        duration: 4000,
+        isClosable: true,
+        colorScheme: "red",
+      });
+    } else if (htmletn != "html" || gifetn != "gif") {
+      toast({
+        title: "You Have to Upload Proper File and Extension",
+        status: "warning",
+        duration: 4000,
+        isClosable: true,
+        colorScheme: "red",
+      });
+    } else {
+      const formData = new FormData();
+      formData.append("template", validbusinessTemplate.template);
+      formData.append("templateImage", validbusinessTemplate.templateImage);
+      try {
+        const response = await axios.post(
+          "http://localhost:8000/wda/business/uploadTemplateDetails",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data", // Important for file upload
+            },
+          }
+        );
+        toast({
+          title: response.data.message,
+          status: "warning",
+          duration: 9000,
+          isClosable: true,
+          colorScheme: "blue",
+        });
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    }
+  };
+
+  // const convertImageToBase64 = (imageFile, imageKey) => {
+  //   const reader = new FileReader();
+
+  //   reader.onload = (e) => {
+  //     const base64String = e.target.result;
+
+  //     setBusinessTemplate((prevImages) => ({
+  //       ...prevImages,
+  //       [imageKey]: base64String,
+  //     }));
+  //   };
+
+  //   reader.readAsDataURL(imageFile);
+  // };
+
   return (
     <Box
       bgImage={background}
@@ -156,7 +236,6 @@ function Home() {
                 >
                   <Query />
                   {/* static imformative box for user */}
-                 
                 </Box>
               </Grid>
             </TabPanel>
@@ -201,10 +280,12 @@ function Home() {
                 textAlign="center"
               >
                 <Input
+                  type="file"
                   variant="outline"
                   placeholder="Uploaded File Name"
                   rounded={"30px"}
-                  // onChange={onChange}
+                  name="template"
+                  onChange={(e) => onChange(e, "template")}
                 />
               </Box>
               <Box
@@ -213,10 +294,12 @@ function Home() {
                 textAlign="center"
               >
                 <Input
+                  type="file"
                   variant="outline"
                   placeholder="Uploaded Gif  Name"
                   rounded={"30px"}
-                  // onChange={onChange}
+                  name="templateImage"
+                  onChange={(e) => onChange(e, "templateImage")}
                 />
               </Box>
               <Box
@@ -240,7 +323,7 @@ function Home() {
                   fontFamily={"sans-serif"}
                   fontWeight={"light"}
                   fontSize={13}
-                  // onClick={searchQuery}
+                  onClick={templateUpload}
                 >
                   Upload
                 </Button>
