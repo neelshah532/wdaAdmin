@@ -17,7 +17,6 @@ import {
   useLazyGetStatusByContactQuery,
   useUpdateStatusMutation,
 } from "../services/wdaSlice";
-// import loader from "../images/animation.gif";
 import { useToast } from "@chakra-ui/react";
 
 function UpdateStatus() {
@@ -50,7 +49,7 @@ function UpdateStatus() {
             status: "success",
             duration: 9000,
             isClosable: true,
-            colorScheme: "blue",
+            colorScheme: "green",
           });
         } else {
           toast({
@@ -66,7 +65,6 @@ function UpdateStatus() {
     if (isStatusUpdateLoading) {
       return (
         <Box bg="white" h="100vh" w="223vh" overflow="hidden">
-          {/* <Image src={loader} alt="loader" h="100vh" ml="27%" mt="5dp" /> */}
           <Spinner
             thickness="4px"
             speed="0.65s"
@@ -88,33 +86,7 @@ function UpdateStatus() {
   const onChangeStatus = (e) => {
     setStatus(e.target.value);
   };
-  // var data = true;
-  // if (data == true) {
-  //   return (
-  //     <Box
-  //       // bg="white"
-  //       h="50vh"
-  //       w="50vw"
-  //       display="flex"
-  //       justifyContent="center"
-  //       alignItems="center"
-  //       overflow="hidden"
-  //     >
-  //       <Box>
-  //         <Spinner
-  //           thickness="4px"
-  //           speed="0.65s"
-  //           emptyColor="gray.200"
-  //           color="blue.500"
-  //           size="xl"
-  //           // position={"relative"}
-  //           // top={"-150px"}
-  //           // right={"370px"}
-  //         />
-  //       </Box>
-  //     </Box>
-  //   );
-  // }
+
   if (isLoading || isDataLoading) {
     return (
       <Box
@@ -212,32 +184,36 @@ function UpdateStatus() {
                   Search
                 </Button>
               </Box>
-              <Box
-                p={{ md: "5px", lg: "4px" }}
-                // w={["100%", "30%", "20%"]}
-                w={{ md: "14%", lg: "20%" }}
-                textAlign="right"
-              >
-                <Button
-                  type="submit"
-                  bg="#1A237E"
-                  color="white"
-                  h={8}
-                  position={"relative"}
-                  w={100}
-                  _hover={{ bg: " #202A9A" }}
-                  rounded={"xl"}
-                  alignItems={"center"}
-                  fontFamily={"sans-serif"}
-                  fontWeight={"light"}
-                  fontSize={13}
-                  onClick={() => {
-                    window.location.reload();
-                  }}
-                >
-                  Clear
-                </Button>
-              </Box>
+              {searchActive && (
+                <>
+                  <Box
+                    p={{ md: "5px", lg: "4px" }}
+                    // w={["100%", "30%", "20%"]}
+                    w={{ md: "14%", lg: "20%" }}
+                    textAlign="right"
+                  >
+                    <Button
+                      type="submit"
+                      bg="#1A237E"
+                      color="white"
+                      h={8}
+                      position={"relative"}
+                      w={100}
+                      _hover={{ bg: " #202A9A" }}
+                      rounded={"xl"}
+                      alignItems={"center"}
+                      fontFamily={"sans-serif"}
+                      fontWeight={"light"}
+                      fontSize={13}
+                      onClick={() => {
+                        window.location.reload();
+                      }}
+                    >
+                      Clear
+                    </Button>
+                  </Box>
+                </>
+              )}
             </Stack>
           </Box>
         </Box>
@@ -282,47 +258,47 @@ function UpdateStatus() {
               </Box>
               {/* BOX OF DOMAIN, STATUS, TYPE, UPDATE */}
               <Box
-                      w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
-                      p={2}
-                      mx="auto"
-                    >
-                      <Stack direction={["column", "row"]}>
-                        <HStack
-                          direction={["column", "row"]}
-                          w={{ md: "25%", lg: "25%" }}
-                        >
-                          <Box pl={["0px", "90px", "90px"]}>
-                            <Text>Domain</Text>
-                          </Box>
-                        </HStack>
-                        <HStack
-                          direction={["column", "row"]}
-                          w={{ md: "43%", lg: "50%" }}
-                        >
-                          <Box pl={{ md: "80px", lg: "130px" }}>
-                            <Text>Status</Text>
-                          </Box>
-                          <Box pl={{ md: "140px", lg: "150px" }}>
-                            <Text>Type</Text>
-                          </Box>
-                        </HStack>
-                        <HStack
-                          direction={["column", "row"]}
-                          w={{ md: "25%", lg: "25%" }}
-                        >
-                          <Box
-                            pl={{ md: "0", lg: "90px" }}
-                            float={{ lg: "right", md: "right" }}
-                            // paddingRight={{md:"100px"}}
-                          >
-                            <Text>Update</Text>
-                          </Box>
-                        </HStack>
-                      </Stack>
-                      <Box w="95%">
-                        <hr />
-                      </Box>
+                w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
+                p={2}
+                mx="auto"
+              >
+                <Stack direction={["column", "row"]}>
+                  <HStack
+                    direction={["column", "row"]}
+                    w={{ md: "25%", lg: "25%" }}
+                  >
+                    <Box pl={["0px", "90px", "90px"]}>
+                      <Text>Domain</Text>
                     </Box>
+                  </HStack>
+                  <HStack
+                    direction={["column", "row"]}
+                    w={{ md: "43%", lg: "50%" }}
+                  >
+                    <Box pl={{ md: "80px", lg: "130px" }}>
+                      <Text>Status</Text>
+                    </Box>
+                    <Box pl={{ md: "140px", lg: "150px" }}>
+                      <Text>Type</Text>
+                    </Box>
+                  </HStack>
+                  <HStack
+                    direction={["column", "row"]}
+                    w={{ md: "25%", lg: "25%" }}
+                  >
+                    <Box
+                      pl={{ md: "0", lg: "90px" }}
+                      float={{ lg: "right", md: "right" }}
+                      // paddingRight={{md:"100px"}}
+                    >
+                      <Text>Update</Text>
+                    </Box>
+                  </HStack>
+                </Stack>
+                <Box w="95%">
+                  <hr />
+                </Box>
+              </Box>
               <Box
                 w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
                 overflow={"hidden"}
@@ -351,12 +327,12 @@ function UpdateStatus() {
                             </Box>
                           </HStack>
                         </Box>
-                        <Box m={1}  w={{ md: "15%", lg: "20%" }}>
+                        <Box m={1} w={{ md: "15%", lg: "20%" }}>
                           <VStack direction={["column", "row"]}>
                             <Box
-                               pl={{ lg: "20px", md: "20px" }}
-                               m={["3px", "3px", "2px"]}
-                               w={["100%", "50%", "auto"]}
+                              pl={{ lg: "20px", md: "20px" }}
+                              m={["3px", "3px", "2px"]}
+                              w={["100%", "50%", "auto"]}
                             >
                               <Select
                                 placeholder="Select Status"
@@ -370,9 +346,10 @@ function UpdateStatus() {
                             </Box>
                           </VStack>
                         </Box>
-                        <Box 
-                         m={["8px", "8px", "8px"]}
-                         w={{ md: "20%", lg: "20%" }}>
+                        <Box
+                          m={["8px", "8px", "8px"]}
+                          w={{ md: "20%", lg: "20%" }}
+                        >
                           <VStack>
                             <Box
                               pl={{ lg: "55px", md: "20px" }}
@@ -382,13 +359,13 @@ function UpdateStatus() {
                             </Box>
                           </VStack>
                         </Box>
-                        <Box 
-                           m={["8px", "8px", "10px"]}
-                           w={{ md: "15", lg: "20%" }}
-                          >
+                        <Box
+                          m={["8px", "8px", "10px"]}
+                          w={{ md: "15", lg: "20%" }}
+                        >
                           <VStack direction={["column", "row"]}>
                             <Box
-                               pl={{ lg: "15px", md: "1px" }}
+                              pl={{ lg: "15px", md: "1px" }}
                               position={["relative", "relative", "relative"]}
                               key={web.webSiteId}
                             >
@@ -637,248 +614,3 @@ function UpdateStatus() {
 }
 
 export default UpdateStatus;
-
-{
-  /* <Box bgColor={"#F5F5F5"} w={{ base: "100%", md: "130%" }} rounded={"xl"}>
-<Box w={{ base: "80%", md: "100%" }}>
-  <Stack direction={["row", "row"]}>
-    <Box p={"5px"} w={{ base: "30%", md: "100%" }}>
-      <Text>Name:Soham Somaiya</Text>
-    </Box>
-    <Box p={"5px"} w={{ base: "30%", md: "100%" }}>
-      <Text>User Id:#1234567890123456789</Text>
-    </Box>
-    <Box p={"5px"} w={{ base: "30%", md: "100%" }}>
-      <Text>Contact:+911234567890</Text>
-    </Box>
-  </Stack>
-</Box>
-
-<hr />
-
-<Box w={{ base: "80%", md: "100%" }}>
-  <Stack direction={["row", "row"]}>
-    <HStack direction={["column", "row"]}>
-      <Box pl={"120px"}>
-        <Text>Domain</Text>
-      </Box>
-    </HStack>
-    <HStack direction={["column", "row"]}>
-      <Box pl={"190px"}>
-        <Text>Status</Text>
-      </Box>
-      <Box pl={"120px"}>
-        <Text>Type</Text>
-      </Box>
-    </HStack>
-    <HStack direction={["column", "row"]}>
-      <Box pl={"200px"} float="right">
-        <Text>Update</Text>
-      </Box>
-    </HStack>
-  </Stack>
-</Box>
-
-<hr />
-
-<Box w={{ base: "80%", md: "100%" }}>
-  <Stack direction={["row", "row"]}>
-    <HStack direction={["column", "row"]}>
-      <Box pl={"70px"}>
-       
-        <Text>www.sohamsomaiya.com</Text>
-      </Box>
-    </HStack>
-    <HStack direction={["column", "row"]}>
-      <Box pl={"70px"} m={"3px"}>
-        <Select placeholder="Select country">
-          <option>pending</option>
-          <option>complete</option>
-        </Select>
-      </Box>
-      <Box pl={"40px"}>
-        <Text>Individual</Text>
-      </Box>
-    </HStack>
-    <HStack direction={["column", "row"]}>
-      <Box pl={"165px"} float="right">
-        <Button
-          type="submit"
-          bg="#1A237E"
-          color="white"
-          // w={"50%"}
-          h={6}
-          w={20}
-          _hover={{ bg: " #202A9A" }}
-          rounded={"xl"}
-          fontFamily={"sans-serif"}
-          // h={10}
-          // left="10%"
-          // size='lg'
-          fontSize={13}
-        >
-          Update
-        </Button>
-      </Box>
-    </HStack>
-  </Stack>
-</Box>
-</Box>
-<Box bgColor={"#F5F5F5"} w={{ base: "100%", md: "130%" }} rounded={"xl"} m={2}>
-    <Box w={{ base: "80%", md: "100%" }}>
-    <Stack direction={["row", "row"]}>
-        <Box p={"5px"} w={{ base: "30%", md: "100%" }}>
-        <Text>Name:Soham Somaiya</Text>
-        </Box>
-        <Box p={"5px"} w={{ base: "30%", md: "100%" }}>
-        <Text>User Id:#1234567890123456789</Text>
-        </Box>
-        <Box p={"5px"} w={{ base: "30%", md: "100%" }}>
-        <Text>Contact:+911234567890</Text>
-        </Box>
-    </Stack>
-</Box>
-
-<hr />
-
-<Box w={{ base: "80%", md: "100%" }}>
-  <Stack direction={["row", "row"]}>
-    <HStack direction={["column", "row"]}>
-      <Box pl={"120px"}>
-        <Text>Domain</Text>
-      </Box>
-    </HStack>
-    <HStack direction={["column", "row"]}>
-      <Box pl={"190px"}>
-        <Text>Status</Text>
-      </Box>
-      <Box pl={"120px"}>
-        <Text>Type</Text>
-      </Box>
-    </HStack>
-    <HStack direction={["column", "row"]}>
-      <Box pl={"200px"} float="right">
-        <Text>Update</Text>
-      </Box>
-    </HStack>
-  </Stack>
-</Box>
-
-<hr />
-
-<Box w={{ base: "80%", md: "100%" }} overflow={'hidden'}>
-  <Stack direction={["row", "row"]}>
-    <Box pl={"70px"}  overflow={'hidden'}  w={"250px"}>
-        <HStack direction={["column", "row"]} >
-        <Box overflow={'hidden'}  w={"100%"} m={1}>
-             <Text >www.sohamsomaiya.com</Text> 
-             <Text>www.fcaitglsunivercity.edu.in</Text> 
-            <Text noOfLines={2} w={"200px"}>www.somethinghhastobeenhappend.edu.in</Text>
-        </Box>
-        </HStack>
-    </Box>
-    <Box m={1}>
-        <VStack direction={["column", "row"]}>
-        <Box pl={"70px"} m={"3px"}>
-            <Select placeholder="Select Status">
-            <option>pending</option>
-            <option>complete</option>
-            </Select>
-        </Box>
-        
-        
-        </VStack>
-    </Box>
-    <Box m={1}>
-        <VStack>
-            <Box pl={"35px"} m={"3px"}>
-                <Text>Individual</Text>
-            </Box>
-        </VStack>
-    </Box>
-    <Box m={1}>
-        <VStack direction={["column", "row"]}>
-            <Box pl={"150px"}>
-                <Button
-                type="submit"
-                bg="#1A237E"
-                color="white"
-                // w={"50%"}
-                h={6}
-                w={20}
-                _hover={{ bg: " #202A9A" }}
-                rounded={"xl"}
-                fontFamily={"sans-serif"}
-                // h={10}
-                // left="10%"
-                // size='lg'
-                fontSize={13}
-                >
-                Update
-                </Button>
-                
-            </Box>
-        </VStack>
-    </Box>
-  </Stack>
-</Box>
-
-<hr />
-<Box w={{ base: "80%", md: "100%" }} overflow={'hidden'}>
-  <Stack direction={["row", "row"]}>
-    <Box pl={"70px"}  overflow={'hidden'}  w={"250px"}>
-        <HStack direction={["column", "row"]} >
-        <Box overflow={'hidden'}  w={"100%"} m={1}>
-            <Text noOfLines={2} >www.sohamsomaiya.com</Text>
-             <Text isTruncated >www.fcaitglsunivercity.edu.in</Text>
-            
-        </Box>
-        </HStack>
-    </Box>
-    <Box m={1}>
-        <VStack direction={["column", "row"]}>
-        <Box pl={"70px"} m={"3px"}>
-            <Select placeholder="Select Status">
-            <option>pending</option>
-            <option>complete</option>
-            </Select>
-        </Box>
-        
-        
-        </VStack>
-    </Box>
-    <Box m={1}>
-        <VStack>
-            <Box pl={"35px"} m={"3px"}>
-                <Text>Individual</Text>
-            </Box>
-        </VStack>
-    </Box>
-    <Box m={1}>
-        <VStack direction={["column", "row"]}>
-            <Box pl={"150px"}>
-                <Button
-                type="submit"
-                bg="#1A237E"
-                color="white"
-                // w={"50%"}
-                h={6}
-                w={20}
-                _hover={{ bg: " #202A9A" }}
-                rounded={"xl"}
-                fontFamily={"sans-serif"}
-                // h={10}
-                // left="10%"
-                // size='lg'
-                fontSize={13}
-                >
-                Update
-                </Button>
-                
-            </Box>
-        </VStack>
-    </Box>
-  </Stack>
-</Box>
-</Box> */
-}

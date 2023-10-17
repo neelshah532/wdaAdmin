@@ -99,32 +99,36 @@ function Query() {
                 Search
               </Button>
             </Box>
-            <Box
-              p={{ md: "5px", lg: "4px" }}
-              // w={["100%", "30%", "16%"]}
-              w={{ md: "14%", lg: "16%" }}
-              textAlign="right"
-            >
-              <Button
-                type="submit"
-                bg="#1A237E"
-                color="white"
-                h={8}
-                position={"relative"}
-                w={{ md: "80px", lg: "70px" }}
-                _hover={{ bg: " #202A9A" }}
-                rounded={"xl"}
-                alignItems={"center"}
-                fontFamily={"sans-serif"}
-                fontWeight={"light"}
-                fontSize={13}
-                onClick={() => {
-                  window.location.reload();
-                }}
-              >
-                Clear
-              </Button>
-            </Box>
+            {(isQueryActive || isQueryDetailsActivate) && (
+              <>
+                <Box
+                  p={{ md: "5px", lg: "4px" }}
+                  // w={["100%", "30%", "16%"]}
+                  w={{ md: "14%", lg: "16%" }}
+                  textAlign="right"
+                >
+                  <Button
+                    type="submit"
+                    bg="#1A237E"
+                    color="white"
+                    h={8}
+                    position={"relative"}
+                    w={{ md: "80px", lg: "70px" }}
+                    _hover={{ bg: " #202A9A" }}
+                    rounded={"xl"}
+                    alignItems={"center"}
+                    fontFamily={"sans-serif"}
+                    fontWeight={"light"}
+                    fontSize={13}
+                    onClick={() => {
+                      window.location.reload();
+                    }}
+                  >
+                    Clear
+                  </Button>
+                </Box>
+              </>
+            )}
           </Stack>
         </Box>
       </Box>
@@ -172,26 +176,6 @@ function Query() {
                   <Box p={["1px", "1px", "1px"]} w={["100%", "30%", "95%"]}>
                     <Text fontSize="15">{item.description}</Text>
                   </Box>
-                  {/* <Button
-                      type="submit"
-                      bg="#1A237E"
-                      color="white"
-                      h={8}
-                      position={"relative"}
-                      m={3}
-                      // w={20}
-                      _hover={{ bg: " #202A9A" }}
-                      rounded={"xl"}
-                      alignItems={"center"}
-                      fontFamily={"sans-serif"}
-                      fontWeight={"light"}
-                      fontSize={13}
-                      onClick={() => {
-                        window.location.reload();
-                      }}
-                    >
-                      Back
-                    </Button> */}
                 </Box>
               </Box>
             </>
@@ -273,27 +257,34 @@ function Query() {
           )}
         </>
       )}
-      <Box
-        p={["1px", "1px", "1px"]}
-        // w={["100%", "50%", "100%"]}
-        w={{ md: "100%", lg: "100%" }}
-        h={{ md: "100%", lg: "30%" }}
-        bottom={{ md: "0", lg: "1%" }}
-        bgColor={"white"}
-        position={"sticky"}
-        mr={{ base: "0", sm: "0", md: "1", lg: "1" }}
-      >
-        <Text
-          fontSize={{ base: "2xl", md: "xl", lg: "2xl" }}
-          position={"relative"}
-          textAlign="center"
-          color={"gray.500"}
-          w={{ md: "100%", lg: "100%" }}
-          m={{ base: "0", sm: "0", md: "1", lg: "3" }}
-        >
-          Tap on user to see details search with contact number
-        </Text>
-      </Box>
+      {
+        (!isQueryActive,
+        !isQueryDetailsActivate && (
+          <>
+            <Box
+              p={["1px", "1px", "1px"]}
+              // w={["100%", "50%", "100%"]}
+              w={{ md: "100%", lg: "100%" }}
+              h={{ md: "100%", lg: "30%" }}
+              bottom={{ md: "0", lg: "1%" }}
+              bgColor={"white"}
+              position={"sticky"}
+              mr={{ base: "0", sm: "0", md: "1", lg: "1" }}
+            >
+              <Text
+                fontSize={{ base: "2xl", md: "xl", lg: "2xl" }}
+                position={"relative"}
+                textAlign="center"
+                color={"gray.500"}
+                w={{ md: "100%", lg: "100%" }}
+                m={{ base: "0", sm: "0", md: "1", lg: "3" }}
+              >
+                Tap on user to see details search with contact number
+              </Text>
+            </Box>
+          </>
+        ))
+      }
     </Box>
   );
 }

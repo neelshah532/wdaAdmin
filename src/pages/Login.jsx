@@ -73,7 +73,7 @@ function Login({ setIsLoggedIn }) {
           status: "warning",
           duration: 9000,
           isClosable: true,
-          colorScheme: "blue",
+          colorScheme: "red",
         });
       } else {
         const user = {
@@ -93,7 +93,7 @@ function Login({ setIsLoggedIn }) {
               status: "warning",
               duration: 9000,
               isClosable: true,
-              colorScheme: "blue",
+              colorScheme: "red",
             });
           }
         });

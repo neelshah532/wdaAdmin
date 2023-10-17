@@ -39,68 +39,66 @@ function Home() {
 
   const templateUpload = async (e) => {
     e.preventDefault();
-
-    const [htmlFileName, htmletn] =
-      validbusinessTemplate.template.name.split(".");
-    const [gifFileName, gifetn] =
-      validbusinessTemplate.templateImage.name.split(".");
-    if (htmlFileName != gifFileName) {
+    if (
+      !validbusinessTemplate.template &&
+      !validbusinessTemplate.templateImage
+    ) {
       toast({
-        title: "HTML and GIF Name Should Be Same",
-        status: "warning",
-        duration: 4000,
-        isClosable: true,
-        colorScheme: "red",
-      });
-    } else if (htmletn != "html" || gifetn != "gif") {
-      toast({
-        title: "You Have to Upload Proper File and Extension",
+        title: "Please Select File and Image",
         status: "warning",
         duration: 4000,
         isClosable: true,
         colorScheme: "red",
       });
     } else {
-      const formData = new FormData();
-      formData.append("template", validbusinessTemplate.template);
-      formData.append("templateImage", validbusinessTemplate.templateImage);
-      try {
-        const response = await axios.post(
-          "http://localhost:8000/wda/business/uploadTemplateDetails",
-          formData,
-          {
-            headers: {
-              "Content-Type": "multipart/form-data", // Important for file upload
-            },
-          }
-        );
+      const [htmlFileName, htmletn] =
+        validbusinessTemplate.template.name.split(".");
+      const [gifFileName, gifetn] =
+        validbusinessTemplate.templateImage.name.split(".");
+
+      if (htmlFileName != gifFileName) {
         toast({
-          title: response.data.message,
+          title: "HTML and GIF Name Should Be Same",
           status: "warning",
-          duration: 9000,
+          duration: 4000,
           isClosable: true,
-          colorScheme: "blue",
+          colorScheme: "red",
         });
-      } catch (error) {
-        console.error("Error uploading file:", error);
+      } else if (htmletn != "html" || gifetn != "gif") {
+        toast({
+          title: "You Have to Upload Proper File and Extension",
+          status: "warning",
+          duration: 4000,
+          isClosable: true,
+          colorScheme: "red",
+        });
+      } else {
+        const formData = new FormData();
+        formData.append("template", validbusinessTemplate.template);
+        formData.append("templateImage", validbusinessTemplate.templateImage);
+        try {
+          const response = await axios.post(
+            "http://localhost:8000/wda/business/uploadTemplateDetails",
+            formData,
+            {
+              headers: {
+                "Content-Type": "multipart/form-data", // Important for file upload
+              },
+            }
+          );
+          toast({
+            title: response.data.message,
+            status: "success",
+            duration: 9000,
+            isClosable: true,
+            colorScheme: "green",
+          });
+        } catch (error) {
+          console.error("Error uploading file:", error);
+        }
       }
     }
   };
-
-  // const convertImageToBase64 = (imageFile, imageKey) => {
-  //   const reader = new FileReader();
-
-  //   reader.onload = (e) => {
-  //     const base64String = e.target.result;
-
-  //     setBusinessTemplate((prevImages) => ({
-  //       ...prevImages,
-  //       [imageKey]: base64String,
-  //     }));
-  //   };
-
-  //   reader.readAsDataURL(imageFile);
-  // };
 
   return (
     <Box
@@ -156,18 +154,6 @@ function Home() {
           // position={{ md: "relative" }}
           variant="unstyled"
         >
-          {/* <TabList position={"relative"} top={{ md: "0", lg: "-36px" }}>
-            <Tab>Status & Query</Tab>
-            <Tab>Templates</Tab>
-          </TabList> */}
-          {/* <TabIndicator
-            position={"relative"}
-            height="3px"
-            bg="#1A237E"
-            borderRadius="1px"
-            top={{ md: "55px", lg: "20px" }}
-          /> */}
-
           <TabPanels
             mt={{ md: "20", lg: "18" }}
             right={{ md: "5%" }}
@@ -183,14 +169,7 @@ function Home() {
             }}
             overflowX={"hidden"}
           >
-            <TabPanel
-              //  px={2}
-              justifyContent="center"
-              alignItems="center"
-
-              // top={{lg:"-25px"}}
-              // position="relative"
-            >
+            <TabPanel justifyContent="center" alignItems="center">
               <Grid
                 gridTemplateColumns={{ base: "1fr", md: "1fr", lg: "1fr 1fr" }}
                 gap={{ base: "1rem", md: "2rem", lg: "2rem" }}
@@ -260,11 +239,7 @@ function Home() {
             mx="auto"
           >
             <Stack direction={{ base: "column", sm: "row" }}>
-              <Box
-                p={["1px", "1px", "1px"]}
-                // w={["100%", "50%", "100%"]}
-                w={{ md: "100%", lg: "100%" }}
-              >
+              <Box p={["1px", "1px", "1px"]} w={{ md: "100%", lg: "100%" }}>
                 <Text
                   fontSize={{ base: "2xl", md: "xl", lg: "2xl" }}
                   position={"relative"}
