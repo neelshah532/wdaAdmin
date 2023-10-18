@@ -28,7 +28,7 @@ function UpdateStatus() {
 
   const [updateState, { isLoading: isStatusUpdateLoading }] = //update
     useUpdateStatusMutation();
-
+  console.log(getAllStatusQueries);
   const [searchActive, setSearchActive] = useState(false);
   const { data: status, isLoading } = useGetAllStatusDetailsQuery(); //status
   const [state, setStatus] = useState("");
@@ -224,182 +224,197 @@ function UpdateStatus() {
       {/* main1 box code */}
       <Box>
         {searchActive == true ? (
-          <>
-            <Box
-              bgColor={"white"}
-              w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
-              rounded={"xl"}
-              mb={2}
-              boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
-            >
-              {/* BOX IS USED FOR DISPLAY NAME, USER_ID, CONTACT_NUMBER */}
+          getAllStatusQueries === undefined ? (
+            <>
               <Box
-                w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
-                p={2}
-                mx="auto"
+                w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
+                rounded={"xl"}
+                mb={2}
               >
-                <Stack
-                  direction={{ base: "column", sm: "row" }}
-                  // w={{ base: "100%", sm: "80%", md: "70%", lg: "100%" }}
+                <h1>No Data Found</h1>
+              </Box>
+            </>
+          ) : (
+            <>
+              <Box
+                bgColor={"white"}
+                w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
+                rounded={"xl"}
+                mb={2}
+                boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
+              >
+                {/* BOX IS USED FOR DISPLAY NAME, USER_ID, CONTACT_NUMBER */}
+                <Box
+                  w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
+                  p={2}
+                  mx="auto"
                 >
-                  <Box p={["1px", "1px", "1px"]} w={{ md: "23%", lg: "75%" }}>
-                    <Text>Name: {getAllStatusQueries.Name}</Text>
-                  </Box>
-                  <Box p={["1px", "1px", "1px"]} w={{ md: "28%", lg: "100%" }}>
-                    <Text>User Id: {getAllStatusQueries.id}</Text>
-                  </Box>
-                  <Box p={["1px", "1px", "1px"]} w={{ md: "30%", lg: "60%" }}>
-                    <Text>Contact: {getAllStatusQueries.ContactNo} </Text>
-                  </Box>
-                </Stack>
-                <Box w="95%">
-                  <hr />
-                </Box>
-              </Box>
-              {/* BOX OF DOMAIN, STATUS, TYPE, UPDATE */}
-              <Box
-                w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
-                p={2}
-                mx="auto"
-              >
-                <Stack direction={["column", "row"]}>
-                  <HStack
-                    direction={["column", "row"]}
-                    w={{ md: "25%", lg: "25%" }}
+                  <Stack
+                    direction={{ base: "column", sm: "row" }}
+                    // w={{ base: "100%", sm: "80%", md: "70%", lg: "100%" }}
                   >
-                    <Box pl={["0px", "90px", "90px"]}>
-                      <Text>Domain</Text>
+                    <Box p={["1px", "1px", "1px"]} w={{ md: "23%", lg: "75%" }}>
+                      <Text>Name: {getAllStatusQueries.Name}</Text>
                     </Box>
-                  </HStack>
-                  <HStack
-                    direction={["column", "row"]}
-                    w={{ md: "43%", lg: "50%" }}
-                  >
-                    <Box pl={{ md: "80px", lg: "130px" }}>
-                      <Text>Status</Text>
-                    </Box>
-                    <Box pl={{ md: "140px", lg: "150px" }}>
-                      <Text>Type</Text>
-                    </Box>
-                  </HStack>
-                  <HStack
-                    direction={["column", "row"]}
-                    w={{ md: "25%", lg: "25%" }}
-                  >
                     <Box
-                      pl={{ md: "0", lg: "90px" }}
-                      float={{ lg: "right", md: "right" }}
-                      // paddingRight={{md:"100px"}}
+                      p={["1px", "1px", "1px"]}
+                      w={{ md: "28%", lg: "100%" }}
                     >
-                      <Text>Update</Text>
+                      <Text>User Id: {getAllStatusQueries.id}</Text>
                     </Box>
-                  </HStack>
-                </Stack>
-                <Box w="95%">
-                  <hr />
+                    <Box p={["1px", "1px", "1px"]} w={{ md: "30%", lg: "60%" }}>
+                      <Text>Contact: {getAllStatusQueries.ContactNo} </Text>
+                    </Box>
+                  </Stack>
+                  <Box w="95%">
+                    <hr />
+                  </Box>
                 </Box>
-              </Box>
-              <Box
-                w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
-                overflow={"hidden"}
-              >
-                {getAllStatusQueries.statusData.map((web) => {
-                  return (
-                    <>
-                      <Stack direction={["column", "row"]}>
-                        <Box
-                          pl={["0px", "70px", "20px"]}
-                          overflow={"hidden"}
-                          w={["100%", "258px"]}
-                          key={web.userId}
-                        >
-                          <HStack direction={["column", "column"]}>
-                            <Box
-                              overflow={"hidden"}
-                              // w={["100%", "auto"]}
-                              w={{ lg: "100%" }}
-                              m={1}
-                              key={web.domainName}
-                            >
-                              <Text noOfLines={2} key={web.domainName}>
-                                {web.domainName}
-                              </Text>
-                            </Box>
-                          </HStack>
-                        </Box>
-                        <Box m={1} w={{ md: "15%", lg: "20%" }}>
-                          <VStack direction={["column", "row"]}>
-                            <Box
-                              pl={{ lg: "20px", md: "20px" }}
-                              m={["3px", "3px", "2px"]}
-                              w={["100%", "50%", "auto"]}
-                            >
-                              <Select
-                                placeholder="Select Status"
-                                rounded={"xl"}
-                                defaultValue={web.statusName}
-                                onChange={onChangeStatus}
-                              >
-                                <option>Pending</option>
-                                <option>Hosted</option>
-                              </Select>
-                            </Box>
-                          </VStack>
-                        </Box>
-                        <Box
-                          m={["8px", "8px", "8px"]}
-                          w={{ md: "20%", lg: "20%" }}
-                        >
-                          <VStack>
-                            <Box
-                              pl={{ lg: "55px", md: "20px" }}
-                              m={["3px", "3px", "3px"]}
-                            >
-                              <Text key={web.websiteType}>{web.type}</Text>
-                            </Box>
-                          </VStack>
-                        </Box>
-                        <Box
-                          m={["8px", "8px", "10px"]}
-                          w={{ md: "15", lg: "20%" }}
-                        >
-                          <VStack direction={["column", "row"]}>
-                            <Box
-                              pl={{ lg: "15px", md: "1px" }}
-                              position={["relative", "relative", "relative"]}
-                              key={web.webSiteId}
-                            >
-                              <Button
-                                type="submit"
-                                bg="#1A237E"
-                                color="white"
-                                h={6}
-                                w={20}
-                                _hover={{ bg: " #202A9A" }}
-                                rounded={"xl"}
-                                fontFamily={"sans-serif"}
-                                fontWeight={"light"}
-                                fontSize={13}
-                                onClick={(e) => {
-                                  onUpdateStatus(e, web.webSiteId);
-                                }}
-                              >
-                                Update
-                              </Button>
-                            </Box>
-                          </VStack>
-                        </Box>
-                      </Stack>
-                    </>
-                  );
-                })}
-                <Box w="95%">
-                  <hr />
+                {/* BOX OF DOMAIN, STATUS, TYPE, UPDATE */}
+                <Box
+                  w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
+                  p={2}
+                  mx="auto"
+                >
+                  <Stack direction={["column", "row"]}>
+                    <HStack
+                      direction={["column", "row"]}
+                      w={{ md: "25%", lg: "25%" }}
+                    >
+                      <Box pl={["0px", "90px", "90px"]}>
+                        <Text>Domain</Text>
+                      </Box>
+                    </HStack>
+                    <HStack
+                      direction={["column", "row"]}
+                      w={{ md: "43%", lg: "50%" }}
+                    >
+                      <Box pl={{ md: "80px", lg: "130px" }}>
+                        <Text>Status</Text>
+                      </Box>
+                      <Box pl={{ md: "140px", lg: "150px" }}>
+                        <Text>Type</Text>
+                      </Box>
+                    </HStack>
+                    <HStack
+                      direction={["column", "row"]}
+                      w={{ md: "25%", lg: "25%" }}
+                    >
+                      <Box
+                        pl={{ md: "0", lg: "90px" }}
+                        float={{ lg: "right", md: "right" }}
+                        // paddingRight={{md:"100px"}}
+                      >
+                        <Text>Update</Text>
+                      </Box>
+                    </HStack>
+                  </Stack>
+                  <Box w="95%">
+                    <hr />
+                  </Box>
                 </Box>
+                <Box
+                  w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
+                  overflow={"hidden"}
+                >
+                  {getAllStatusQueries.statusData.map((web) => {
+                    return (
+                      <>
+                        <Stack direction={["column", "row"]}>
+                          <Box
+                            pl={["0px", "70px", "20px"]}
+                            overflow={"hidden"}
+                            w={["100%", "258px"]}
+                            key={web.userId}
+                          >
+                            <HStack direction={["column", "column"]}>
+                              <Box
+                                overflow={"hidden"}
+                                // w={["100%", "auto"]}
+                                w={{ lg: "100%" }}
+                                m={1}
+                                key={web.domainName}
+                              >
+                                <Text noOfLines={2} key={web.domainName}>
+                                  {web.domainName}
+                                </Text>
+                              </Box>
+                            </HStack>
+                          </Box>
+                          <Box m={1} w={{ md: "15%", lg: "20%" }}>
+                            <VStack direction={["column", "row"]}>
+                              <Box
+                                pl={{ lg: "20px", md: "20px" }}
+                                m={["3px", "3px", "2px"]}
+                                w={["100%", "50%", "auto"]}
+                              >
+                                <Select
+                                  placeholder="Select Status"
+                                  rounded={"xl"}
+                                  defaultValue={web.statusName}
+                                  onChange={onChangeStatus}
+                                >
+                                  <option>Pending</option>
+                                  <option>Hosted</option>
+                                </Select>
+                              </Box>
+                            </VStack>
+                          </Box>
+                          <Box
+                            m={["8px", "8px", "8px"]}
+                            w={{ md: "20%", lg: "20%" }}
+                          >
+                            <VStack>
+                              <Box
+                                pl={{ lg: "55px", md: "20px" }}
+                                m={["3px", "3px", "3px"]}
+                              >
+                                <Text key={web.websiteType}>{web.type}</Text>
+                              </Box>
+                            </VStack>
+                          </Box>
+                          <Box
+                            m={["8px", "8px", "10px"]}
+                            w={{ md: "15", lg: "20%" }}
+                          >
+                            <VStack direction={["column", "row"]}>
+                              <Box
+                                pl={{ lg: "15px", md: "1px" }}
+                                position={["relative", "relative", "relative"]}
+                                key={web.webSiteId}
+                              >
+                                <Button
+                                  type="submit"
+                                  bg="#1A237E"
+                                  color="white"
+                                  h={6}
+                                  w={20}
+                                  _hover={{ bg: " #202A9A" }}
+                                  rounded={"xl"}
+                                  fontFamily={"sans-serif"}
+                                  fontWeight={"light"}
+                                  fontSize={13}
+                                  onClick={(e) => {
+                                    onUpdateStatus(e, web.webSiteId);
+                                  }}
+                                >
+                                  Update
+                                </Button>
+                              </Box>
+                            </VStack>
+                          </Box>
+                        </Stack>
+                      </>
+                    );
+                  })}
+                  <Box w="95%">
+                    <hr />
+                  </Box>
+                </Box>
+                {/* BOX IS USED FOR DISPLAY DETAILS OF DOMAIN NAME, STATUS SELECTION, TYPE_NAME, UPDATE_BUTTON */}
               </Box>
-              {/* BOX IS USED FOR DISPLAY DETAILS OF DOMAIN NAME, STATUS SELECTION, TYPE_NAME, UPDATE_BUTTON */}
-            </Box>
-          </>
+            </>
+          )
         ) : (
           <>
             {status.allStatusDetails.map((item) => {

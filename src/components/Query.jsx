@@ -17,12 +17,17 @@ function Query() {
   const [isQueryActive, setActive] = useState(false);
   const [isQueryDetailsActivate, setIsQueryDetailsActivate] = useState(false);
   const [contactNo, setContactNo] = useState(false);
+  const [message, setMessage] = useState("");
   const { data: queries, isLoading } = useGetAllQueriesQuery();
 
   const searchQuery = (e) => {
     e.preventDefault();
-    setForQueries(contactNo);
     setActive(true);
+    setForQueries(contactNo)
+      .unwrap()
+      .then((result) => {
+        setMessage(result.message);
+      });
   };
 
   const onChange = (e) => {
@@ -99,6 +104,7 @@ function Query() {
                 Search
               </Button>
             </Box>
+
             {(isQueryActive || isQueryDetailsActivate) && (
               <>
                 <Box
@@ -132,135 +138,183 @@ function Query() {
           </Stack>
         </Box>
       </Box>
-      {isQueryDetailsActivate == true ? (
-        getAllQueriesByContact.queries.map((item) => {
-          return (
-            <>
-              <Box
-                bgColor={"white"}
-                w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
-                rounded={"xl"}
-                mb={2}
-                boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
-              >
-                <Box
-                  w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
-                  p={2}
-                  mx="auto"
-                >
-                  <Stack direction={{ base: "column", sm: "row" }}>
-                    <Box
-                      p={["1px", "1px", "1px"]}
-                      // w={["100%", "30%", "100%"]}
-                      w={{ base: "100%", sm: "80%", md: "80%", lg: "100%" }}
-                    >
-                      <Text>Web Id:{item.webId} </Text>
-                    </Box>
-                    <Box
-                      p={["1px", "1px", "1px"]}
-                      //  w={["100%", "30%", "60%"]}
-                      w={{ base: "100%", sm: "80%", md: "50%", lg: "60%" }}
-                    >
-                      <Text>Date: {item.date} </Text>
-                    </Box>
-                  </Stack>
-                  <Box w="95%">
-                    <hr />
-                  </Box>
-                </Box>
-                <Box
-                  w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
-                  p={2}
-                  mx="auto"
-                >
-                  <Box p={["1px", "1px", "1px"]} w={["100%", "30%", "95%"]}>
-                    <Text fontSize="15">{item.description}</Text>
-                  </Box>
-                </Box>
-              </Box>
-            </>
-          );
-        })
-      ) : (
+      {
         <>
-          {isQueryActive == true ? (
-            <Box
-              bgColor={"white"}
-              w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
-              rounded={"xl"}
-              mb={2}
-              boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
-              onClick={() => {
-                setForQueries(getAllQueriesByContact.ContactNo);
-                setIsQueryDetailsActivate(true);
-                setContactNo(getAllQueriesByContact.ContactNo);
-              }}
-            >
-              <Box
-                w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
-                p={2}
-                mx="auto"
-              >
-                <Box p={["1px", "1px", "1px"]} w={["100%", "30%", "95%"]}>
-                  {getAllQueriesByContact.Name}
-                  {getAllQueriesByContact.ContactNo}
-                </Box>
-              </Box>
-            </Box>
-          ) : (
-            <>
-              {queries.info.map((item) => {
-                return (
-                  <>
+          {isQueryDetailsActivate == true ? (
+            getAllQueriesByContact.queries.map((item) => {
+              return (
+                <>
+                  <Box
+                    bgColor={"white"}
+                    w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
+                    rounded={"xl"}
+                    mb={2}
+                    boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
+                  >
                     <Box
-                      bgColor={"white"}
-                      w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
-                      rounded={"xl"}
-                      mb={2}
-                      boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
-                      onClick={() => {
-                        setForQueries(item.contactNo);
-                        setIsQueryDetailsActivate(true);
-                        setContactNo(item.contactNo);
+                      w={{
+                        base: "100%",
+                        sm: "80%",
+                        md: "100%",
+                        lg: "100%",
                       }}
+                      p={2}
+                      mx="auto"
                     >
-                      <Box
-                        display="flex"
-                        justifyContent="space-between"
-                        // alignItems="center"
-                        w={{ base: "100%", sm: "80%", md: "100%", lg: "100%" }}
-                        p={2}
-                        mx="auto"
-                      >
-                        <Text
-                          m={["1px", "1px", "1px"]}
-                          w={["100%", "30%", "80%"]}
-                          fontSize="19"
-                          textAlign="left"
+                      <Stack direction={{ base: "column", sm: "row" }}>
+                        <Box
+                          p={["1px", "1px", "1px"]}
+                          w={{
+                            base: "100%",
+                            sm: "80%",
+                            md: "80%",
+                            lg: "100%",
+                          }}
                         >
-                          {item.name}
-                        </Text>
-                        <Text
-                          m={["1px", "1px", "1px"]}
-                          w={["100%", "30%", "80%"]}
-                          fontSize="19"
-                          textAlign="right"
+                          <Text>Web Id:{item.webId} </Text>
+                        </Box>
+                        <Box
+                          p={["1px", "1px", "1px"]}
+                          w={{
+                            base: "100%",
+                            sm: "80%",
+                            md: "50%",
+                            lg: "60%",
+                          }}
                         >
-                          {item.contactNo}
-                        </Text>
+                          <Text>Date: {item.date} </Text>
+                        </Box>
+                      </Stack>
+                      <Box w="95%">
+                        <hr />
                       </Box>
                     </Box>
-                  </>
-                );
-              })}
+                    <Box
+                      w={{
+                        base: "100%",
+                        sm: "80%",
+                        md: "100%",
+                        lg: "100%",
+                      }}
+                      p={2}
+                      mx="auto"
+                    >
+                      <Box p={["1px", "1px", "1px"]} w={["100%", "30%", "95%"]}>
+                        <Text fontSize="15">{item.description}</Text>
+                      </Box>
+                    </Box>
+                  </Box>
+                </>
+              );
+            })
+          ) : (
+            <>
+              {isQueryActive == true ? (
+                message ? (
+                  <Box
+                    w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
+                    rounded={"xl"}
+                    mb={2}
+                  >
+                    <h1>No Data Found</h1>
+                  </Box>
+                ) : (
+                  <Box
+                    bgColor={"white"}
+                    w={{ base: "100%", sm: "100%", md: "100%", lg: "100%" }}
+                    rounded={"xl"}
+                    mb={2}
+                    boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
+                    onClick={() => {
+                      setForQueries(getAllQueriesByContact.ContactNo);
+                      setIsQueryDetailsActivate(true);
+                      setContactNo(getAllQueriesByContact.ContactNo);
+                    }}
+                  >
+                    <Box
+                      w={{
+                        base: "100%",
+                        sm: "80%",
+                        md: "100%",
+                        lg: "100%",
+                      }}
+                      p={2}
+                      mx="auto"
+                    >
+                      <Box p={["1px", "1px", "1px"]} w={["100%", "30%", "95%"]}>
+                        {getAllQueriesByContact.Name}
+                        {getAllQueriesByContact.ContactNo}
+                      </Box>
+                    </Box>
+                  </Box>
+                )
+              ) : (
+                <>
+                  {queries.info.map((item) => {
+                    return (
+                      <>
+                        <Box
+                          bgColor={"white"}
+                          w={{
+                            base: "100%",
+                            sm: "100%",
+                            md: "100%",
+                            lg: "100%",
+                          }}
+                          rounded={"xl"}
+                          mb={2}
+                          boxShadow="0px 4px 6px rgba(0, 0, 0, 0.1)"
+                          onClick={() => {
+                            setForQueries(item.contactNo);
+                            setIsQueryDetailsActivate(true);
+                            setContactNo(item.contactNo);
+                          }}
+                        >
+                          <Box
+                            display="flex"
+                            justifyContent="space-between"
+                            // alignItems="center"
+                            w={{
+                              base: "100%",
+                              sm: "80%",
+                              md: "100%",
+                              lg: "100%",
+                            }}
+                            p={2}
+                            mx="auto"
+                          >
+                            <Text
+                              m={["1px", "1px", "1px"]}
+                              w={["100%", "30%", "80%"]}
+                              fontSize="19"
+                              textAlign="left"
+                            >
+                              {item.name}
+                            </Text>
+                            <Text
+                              m={["1px", "1px", "1px"]}
+                              w={["100%", "30%", "80%"]}
+                              fontSize="19"
+                              textAlign="right"
+                            >
+                              {item.contactNo}
+                            </Text>
+                          </Box>
+                        </Box>
+                      </>
+                    );
+                  })}
+                </>
+              )}
             </>
           )}
         </>
-      )}
+      }
+
       {
         (!isQueryActive,
-        !isQueryDetailsActivate && (
-          <>
+        !isQueryDetailsActivate &&
+          (message ? null : (
             <Box
               p={["1px", "1px", "1px"]}
               // w={["100%", "50%", "100%"]}
@@ -282,8 +336,7 @@ function Query() {
                 Tap on user to see details search with contact number
               </Text>
             </Box>
-          </>
-        ))
+          )))
       }
     </Box>
   );
